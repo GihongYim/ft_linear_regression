@@ -10,15 +10,10 @@ def train(data, num_of_epoch, learning_rate):
             loss = estimate_price(theta0, theta1, row['km']) - row['price']
             tmp_theta0 += loss
             tmp_theta1 += loss * row['km']
-        tmp_theta0 /= len(data)
-        tmp_theta1 /= len(data)
-        print(tmp_theta0)
-        print(tmp_theta1)
-        break
-        tmp_theta0 *= learning_rate
-        tmp_theta1 *= learning_rate
-        theta0 -= tmp_theta0
-        theta1 -= tmp_theta1
+        theta0 = theta0 - learning_rate / len(data) * tmp_theta0
+        theta1 = theta1 - learning_rate / len(data) * tmp_theta1
+        print(theta0)
+        print(theta1)
     return theta0, theta1
 
 

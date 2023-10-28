@@ -12,9 +12,8 @@ def main():
     """
     
     data = pd.read_csv("data.csv")
-    data.astype(np.float64)
     show_data_graph(data)
-    theta0, theta1 = train(data, 100, 0.0005)
+    theta0, theta1 = train(data, 50, 0.0005)
     x_vec = [x for x in np.arange(0, 300000, 10000)]
     y_vec = [estimate_price(theta0, theta1, x) for x in x_vec]
     plt.figure()
