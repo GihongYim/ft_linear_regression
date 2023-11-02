@@ -1,22 +1,30 @@
+from get_km_price_data import get_km_price_data
+from train import train
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd
-from graph import show_data_graph
-from train_model import train, estimate_price
+from estimate_price import estimate
 
 
 def main():
-    """
-        main function for ft_linear_regression
-    """
-    data = pd.read_csv("data.csv")
-    show_data_graph(data)
-    theta0, theta1 = train(data, 5, 0.0005)
-    x_vec = [x * 1000 for x in np.arange(0, 300000, 10000)]
-    y_vec = [estimate_price(theta0, theta1, x) * 1000 for x in x_vec]
+    filename = 'data.csv'
+    data = get_km_price_data(filename)
+    model = train(np.array(data.loc[:, 'km']), np.array(data.loc[:, 'price']))
+    thetas = model.gradient_descent(200, 0.0000000001)
+    print(thetas)
     plt.figure()
-    sns.lineplot(x=x_vec, y=y_vec)
+    sns.scatterplot(x=data.loc[:, 'km'], y=data.loc[:, 'price'])
+    plt.show()
+    
+    estimate_model = estimate(thetas[0], thetas[1])
+    km = np.array([float(x) for x in range(0, 250000, 100)])
+    price = np.array([estimate_model.estimate_price(x) for x in km])
+    plt.figure()
+    sns.scatterplot(x=km, y=price)
+    plt.show()
+    
+    plt.figure()
+    sns.lineplot(model.history)
     plt.show()
 
 
