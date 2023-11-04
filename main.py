@@ -1,27 +1,19 @@
-from get_km_price_data import get_km_price_data
-from linear_regression import Linear_regression
+import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from predict_price import predict
-
+from predict import predict_price
+from linear_regression import Linear_regression
 
 def main():
-    filename = 'data.csv'
-    data = get_km_price_data(filename)
-    km = np.array(data.loc[:, 'km'])
-    price = np.array(data.loc[:, 'price'])
-    model = Linear_regression(km, price, predict)
-    thetas = model.gradient_descent(50000, 0.001)
-    print(thetas)
-    fig, ax = plt.subplots(nrows=2)
-    sns.scatterplot(x=data.loc[:, 'km'], y=data.loc[:, 'price'], ax=ax[0])    
-    km = np.array([float(x) for x in range(0, 250000, 100)])
-    price = np.array([model.predict(x) for x in km])
-    sns.lineplot(x=km, y=price, ax=ax[0])        
-    sns.lineplot(model.history, ax=ax[1])
-    plt.show()
-
+    data = pd.read_csv('data.csv')
+    km =  data.loc[:,'km'].astype('float')
+    price = data.loc[:, 'price'].astype('float')
+    model = Linear_regression(x=km, y=price)
+    model.train(epochs=20000, lr=0.0001)
+    theta_history = model.theta_history
+    theta0, theta1 = model.theta0, model.theta1
+    data_x = np.linspace(np.min(km), np.max(km), num=1000)
+    data_y = []
+    
 
 if __name__ == "__main__":
     main()
