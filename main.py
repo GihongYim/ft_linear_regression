@@ -18,7 +18,7 @@ def main():
     sns.scatterplot(x=data.loc[:, 'km'], y=data.loc[:, 'price'], ax=ax[0])    
     km = np.array([float(x) for x in range(0, 250000, 100)])
     price = np.array([model.predict(x) for x in km])
-    sns.lineplot(x=km, y=price, ax=ax[0])
+    sns.lineplot(x=km, y=price, ax=ax[0])        
     sns.lineplot(model.history, ax=ax[1])
     plt.show()
 
