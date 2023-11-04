@@ -24,16 +24,21 @@ class Linear_regression:
             diff = self.norm_predict(norm_x) - norm_y
             tmp_theta0 = lr / float(len(self.x)) * np.sum(diff)
             tmp_theta1 = lr / float(len(self.x)) * np.sum(diff * norm_x)
-            # self.theta_history([self.theta0, self.theta1])
-            self.loss_history.append((diff ** 2) / float(len(self.x)))
+            self.theta_history.append([self.theta0, self.theta1])
+            loss = sum(diff ** 2) / float(len(self.x))
+            self.loss_history.append(loss)
             self.theta0 -= tmp_theta0
             self.theta1 -= tmp_theta1
+            print(f"{self.theta0} {self.theta1}")
+            print(f"{epoch} epoch loss: {loss}")
+            
+            
             
     def norm_predict(self, x):
         return self.theta0 + self.theta1 * x
     
     def predict(self, x):
-        x_z = (x - self.x_min) / (self.x_max - self.y_min)
+        x_z = (x - self.x_min) / (self.x_max - self.x_min)
         y_z = self.theta0 + self.theta1 * x_z
         y = (self.y_max - self.y_min) * y_z + self.y_min
         return y
