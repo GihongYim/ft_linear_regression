@@ -19,7 +19,6 @@ class Linear_regression:
         self.theta0, self.theta1 = 0.0, 0.0
         tmp_theta0 = 0.0
         tmp_theta1 = 0.0
-        self.theta_history.append([self.theta0, self.theta1])
         for epoch in range(0, epochs):
             diff = self.norm_predict(norm_x) - norm_y
             tmp_theta0 = lr / float(len(self.x)) * np.sum(diff)
