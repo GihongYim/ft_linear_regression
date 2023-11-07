@@ -1,10 +1,10 @@
 import numpy as np
-
+import pickle 
 from utils import min_max_normalize
-from predict import predict_price
+
 
 class Linear_regression:
-    def __init__ (self, x, y):
+    def __init__ (self, x=[], y=[]):
         self.x = x
         self.y = y
         self.theta0, self.theta1 = 0.0, 0.0
@@ -30,8 +30,13 @@ class Linear_regression:
             self.theta1 -= tmp_theta1
             print(f"{self.theta0} {self.theta1}")
             print(f"{epoch} epoch loss: {loss}")
-            
-            
+        with open('parameter.pickle', 'wb') as file:
+            pickle.dump(self.theta0, file)
+            pickle.dump(self.theta1, file)
+            pickle.dump(self.x_min, file)
+            pickle.dump(self.x_max, file)
+            pickle.dump(self.y_min, file)
+            pickle.dump(self.y_max, file)
             
     def norm_predict(self, x):
         return self.theta0 + self.theta1 * x

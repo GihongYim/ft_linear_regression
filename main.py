@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-from predict import predict_price
 from linear_regression import Linear_regression
 
 def main():
