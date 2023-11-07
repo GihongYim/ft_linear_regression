@@ -29,16 +29,22 @@ def main():
             data_x = np.linspace(np.min(km), np.max(km), num=1000)
             data_y = [model.predict(x) for x in data_x]
             fig.clear()
-            sns.scatterplot(x=km, y=price)
-            sns.lineplot(x=data_x, y=data_y).set(title=f"{epoch} epoch")
+            sns.scatterplot(x=km, y=price, color='red')
+            sns.lineplot(x=data_x, y=data_y, color='blue').set(title=f"{epoch} epoch")
+            plt.legend(["train data", "predict"])
             plt.pause(0.0001)
         epoch += 1
     plt.show()    
     plt.figure()
-    sns.lineplot(model.loss_history).set(title="loss")
+    sns.lineplot(model.loss_history).set(title="normalized data loss")
+    plt.legend(['loss'])
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
     plt.show()
     error_dist = [y - model.predict(x) for x, y in zip(km, price)]
-    sns.histplot(data=error_dist).set(title="error : y - f(x)")
+    sns.histplot(data=error_dist).set(title="error distribution")
+    plt.xlabel('y - f(x)')
+    plt.ylabel('count')
     plt.show()
     
     
