@@ -6,7 +6,6 @@ def predict():
     model = Linear_regression()
     try:
         with open('parameter.pickle', 'rb') as file:
-            print(theta0)
             theta0 = pickle.load(file)
             theta1 = pickle.load(file)
             x_min = pickle.load(file)
@@ -28,7 +27,6 @@ def predict():
         return 0.0
     mileage = int(input("Enter your car's mileage: "))
     km = model.predict(mileage)
-    return mileage
-    
+    return km
 if __name__ == "__main__":
     print(predict())
