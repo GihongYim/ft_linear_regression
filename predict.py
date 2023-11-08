@@ -21,10 +21,10 @@ def predict():
     except Exception as e:
         theta0 = 0.0
         theta1 = 0.0
-        print(f"exception occureed")
-        return 0.0
-    if theta0 == 0.0 and theta1 == 0.0:
-        return 0.0
+        print(f"parameter.pickle not found theta0 theta1 set 0.0")
+        mileage = int(input("Enter your car's mileage: "))
+        print('0.0')
+        exit(0)
     mileage = int(input("Enter your car's mileage: "))
     km = model.predict(mileage)
     return km
