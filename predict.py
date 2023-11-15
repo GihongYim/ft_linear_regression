@@ -1,11 +1,14 @@
+#!/usr/bin/env python3
+
+import sys
 from linear_regression import Linear_regression
 import pickle
-def predict():
+def predict(filename):
     theta0 = 0.0
     theta1 = 0.0
     model = Linear_regression()
     try:
-        with open('parameter.pickle', 'rb') as file:
+        with open(filename, 'rb') as file:
             theta0 = pickle.load(file)
             theta1 = pickle.load(file)
             x_min = pickle.load(file)
@@ -29,4 +32,8 @@ def predict():
     km = model.predict(mileage)
     return km
 if __name__ == "__main__":
-    print(predict())
+    if len(sys.argv) != 2:
+        filename = ""
+    else:
+        filename = sys.argv[1]
+    print(predict(filename))

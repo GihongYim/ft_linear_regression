@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,13 +8,20 @@ import seaborn as sns
 from linear_regression import Linear_regression
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("input your filename")
+        exit(0)
     try:
-        data = pd.read_csv('data.csv')
+        data = pd.read_csv(sys.argv[1])
     except Exception as e:
         print(f"{e}")
         exit(1)
-    km =  data.loc[:,'km'].astype('float')
-    price = data.loc[:, 'price'].astype('float')
+    try:
+        km =  data.loc[:,'km'].astype('float')
+        price = data.loc[:, 'price'].astype('float')
+    except Exception as e:
+        print(f"{e} column not found. check your csv file")
+        exit(0)
     model = Linear_regression(x=km, y=price)
     model.train(epochs=2000, lr=0.03)
     fig = plt.figure()
